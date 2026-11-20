@@ -1,0 +1,28 @@
+name: Build APK
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - name: Generar proyecto Android
+        run: |
+          flutter create --platforms=android --org com.kakeo --project-name kakeo _gen
+          cp -r _gen/android android
+          rm -rf _gen
+          sed -i 's/android:label="[^"]*"/android:label="Kakeo"/' android/app/src/main/AndroidManifest.xml
+      - run: flutter pub get
+      - run: flutter build apk --release
+      - uses: actions/upload-artifact@v4
+        with:
+          name: kakeo-apk
+          path: build/app/outputs/flutter-apk/app-release.apk

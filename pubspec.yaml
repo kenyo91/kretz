@@ -1,0 +1,17 @@
+name: kakeo
+description: Presupuesto consciente estilo Kakebo.
+publish_to: none
+version: 1.1.0+2
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: any
+  crypto: ^3.0.3
+  shared_preferences: ^2.2.0
+  fl_chart: ^0.69.0
+flutter:
+  uses-material-design: true
